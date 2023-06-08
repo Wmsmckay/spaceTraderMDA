@@ -1,69 +1,59 @@
 {
-  'symbol': 'X1-NS59',
-  'sectorSymbol': 'X1',
-  'type': 'ORANGE_STAR',
-  'x': -8299,
-  'y': -7117,
-  'waypoints':
-        [
-          {
-            'symbol': 'X1-NS59-10000X',
-            'type': 'PLANET',
-            'x': 4,
-            'y': -36
-          },
-          {
-            'symbol': 'X1-NS59-82461A',
-            'type': 'MOON',
-            'x': 4,
-            'y': -36
-          },
-          {
-            'symbol': 'X1-NS59-69392E',
-            'type': 'MOON',
-            'x': 4,
-            'y': -36
+  "symbol": "X1-NS59",
+  "sectorSymbol": "X1",
+  "type": "ORANGE_STAR",
+  "x": -8299,
+  "y": -7117,
+  "waypoints": [
+    {
+      "symbol": "X1-NS59-10000X",
+      "type": "PLANET",
+      "x": 4,
+      "y": -36
+    },
+    {
+      "symbol": "X1-NS59-82461A",
+      "type": "MOON",
+      "x": 4,
+      "y": -36
+    },
+    {
+      "symbol": "X1-NS59-69392E",
+      "type": "MOON",
+      "x": 4,
+      "y": -36
+    },
+    {
+      "symbol": "X1-NS59-37333X",
+      "type": "PLANET",
+      "x": 7,
+      "y": -44
+    },
+    {
+      "symbol": "X1-NS59-06794B",
+      "type": "MOON",
+      "x": 7,
+      "y": -44
+    },
+    {
+      "symbol": "X1-NS59-99085D",
+      "type": "PLANET",
+      "x": 39,
+      "y": -52
+    },
+    {
+      "symbol": "X1-NS59-13136E",
+      "type": "MOON",
+      "x": 39,
+      "y": -52
+    },
+    {
+      "symbol": "X1-NS59-03887X",
+      "type": "MOON",
+      "x": 39,
+      "y": -52
+    }
+  ],
 
-          },
-          {
-            'symbol': 'X1-NS59-37333X',
-            'type': 'PLANET',
-            'x': 7,
-            'y': -44
-          },
-          {
-            'symbol': 'X1-NS59-06794B',
-            'type': 'MOON',
-            'x': 7,
-            'y': -44
-
-          },
-          {
-            'symbol': 'X1-NS59-99085D',
-            'type': 'PLANET',
-            'x': 39,
-            'y': -52
-
-          },
-          {
-            'symbol': 'X1-NS59-13136E',
-            'type': 'MOON',
-            'x': 39,
-            'y': -52
-
-          },
-          {
-            'symbol': 'X1-NS59-03887X',
-            'type': 'MOON',
-            'x': 39,
-            'y': -52
-
-          }
-        ],
-
-'factions': 
-[
-
-]
-
+  "factions": []
 }

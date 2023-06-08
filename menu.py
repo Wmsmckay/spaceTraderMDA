@@ -89,7 +89,7 @@ def server_status():
     return response_data['status']
 
 def get_input():
-    response = input(">")
+    response = input("> ")
     return response
 
 def view_ships(ship_id=None):
@@ -97,21 +97,23 @@ def view_ships(ship_id=None):
     if ship_id is not None:
         url += f"/{ship_id}"
     response = requests.get(url, headers=headers)
-    print(response)
-    print(url)
     if response.status_code == 200:
         # Process and display ship details
-        ship_details = response.json()
-        if isinstance(ship_details, list):
-            for ship in ship_details:
-                # Display ship information
-                print(ship)
+        response = response.json()['data']
+
+        if isinstance(response, list):
+            print("Name\t\tShip Type\tLocation\tStatus\t")
+            for ship in response:
+                print(f"{ship['symbol']}\t{ship['frame']['name'].split('_')[0].split()[1]}\t\t{ship['nav']['waypointSymbol']}\t{ship['nav']['status']}\t")
         else:
             # Display ship information
-            print(ship_details)
+            print("Not a loop")
+            print(response)
     else:
         print("Error retrieving ship details.")
 
+def view_ships_status(status):
+    url = f"{base_url}my/ships"
 
 def print_menu():
     menu = '''\n
@@ -172,11 +174,9 @@ def runMenu():
                 else:
                     # Invalid or incomplete command
                     print("Invalid command. Please specify '--all' or '--ship <ship_id>'.")
-            elif len(tokens) > 1 and tokens[1] == "docked":
+            elif len(tokens) > 1 and (tokens[1] == "docked" or tokens[1] == "transit"):
                 # Execute code to view docked ships
-                pass
-            elif len(tokens) > 1 and tokens[1] == "transit":
-                # Execute code to view ships in transit
+                view_ships_status(tokens[1])
                 pass
             else:
                 # Invalid command
@@ -202,9 +202,8 @@ def new_user():
     pass
 
 def start_app():
-    
     server_status()
-    token = authenticate_user()
+    authenticate_user()
     display_title()
     runMenu()
 
