@@ -16,8 +16,6 @@ title = '''
  |T| |r| |a| |d| |e|   |t| |h| |e|   |G| |a| |l| |a| |x| |y|
  +-+ +-+ +-+ +-+ +-+   +-+ +-+ +-+   +-+ +-+ +-+ +-+ +-+ +-+
 
- by MaKay Williams
-
 '''
 
 token = ''
@@ -32,14 +30,14 @@ class bcolors:
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
-print(f"{bcolors.WARNING}Warning: No active frommets remain. Continue?{bcolors.ENDC}")
+# print(f"{bcolors.WARNING}Warning: No active frommets remain. Continue?{bcolors.ENDC}")
 
-print(f"{bcolors.HEADER}HEADER{bcolors.ENDC}")
-print(f"{bcolors.OKBLUE}OKBLUE{bcolors.ENDC}")
-print(f"{bcolors.OKCYAN}OKCYAN{bcolors.ENDC}")
-print(f"{bcolors.OKGREEN}OKGREEN{bcolors.ENDC}")
-print(f"{bcolors.WARNING}WARNING{bcolors.ENDC}")
-print(f"{bcolors.UNDERLINE}UNDERLINE{bcolors.ENDC}")
+# print(f"{bcolors.HEADER}HEADER{bcolors.ENDC}")
+# print(f"{bcolors.OKBLUE}OKBLUE{bcolors.ENDC}")
+# print(f"{bcolors.OKCYAN}OKCYAN{bcolors.ENDC}")
+# print(f"{bcolors.OKGREEN}OKGREEN{bcolors.ENDC}")
+# print(f"{bcolors.WARNING}WARNING{bcolors.ENDC}")
+# print(f"{bcolors.UNDERLINE}UNDERLINE{bcolors.ENDC}")
 
 
 def display_title():
@@ -63,12 +61,96 @@ def server_status():
         sys.exit()
     return response_data['status']
 
+def get_input():
+    response = input(">")
+    return response
+
+def print_menu():
+    menu = '''\n
+    Space Traders Terminal Application - Help
+
+    Welcome to the Space Traders Terminal Application! This application allows you to interact with the Space Traders API and manage your space trading operations. Below are the available commands and their usage:
+
+    help: Displays the help information for the terminal application.
+
+    Example: help
+    view ships [options]: Displays information about your ships.
+
+    Options:
+    --all: Display all ship details.
+    --ship <ship_id>: Display details for a specific ship.
+    Example:
+    view ships: Displays basic ship details for all your ships.
+    view ships --all: Displays all ship details for all your ships.
+    view ships --ship ABC123: Displays all details for the ship with ID ABC123.
+    view docked: Displays a list of ships currently docked at your location.
+
+    Example: view docked
+    buy cargo <ship_id> <good> <quantity>: Buys a specified quantity of cargo for a ship.
+
+    Example: buy cargo ABC123 water 10
+    sell cargo <ship_id> <good> <quantity>: Sells a specified quantity of cargo from a ship.
+
+    Example: sell cargo ABC123 water 5
+    view transit: Displays a list of ships currently in transit and their estimated time of arrival.
+
+    Example: view transit
+    time left <ship_id>: Displays the estimated time left for a ship to reach its destination.
+
+    Example: time left ABC123
+    exit: Exits the terminal application.
+
+    Example: exit
+    Please note that <ship_id> refers to the unique identifier of your ship, and <good> refers to the type of cargo you want to buy or sell.
+
+    Feel free to explore the features of the Space Traders Terminal Application and reach out if you have any further questions or need assistance! Happy trading!
+    '''
+    print(menu)
+
 def runMenu():
     while True:
-        # print menu
-        # wait for input
-        pass
-        sys.exit()
+        user_input = get_input().lower()  # Read user input
+        tokens = user_input.split()  # Split input into tokens
+
+        command = tokens[0]  # Identify the command
+        if command == "help":
+            print_menu()
+        elif command == "view":
+            if len(tokens) > 1 and tokens[1] == "ships":
+                if "--all" in tokens:
+                    # Execute code to view all ship details
+                    pass
+                elif "--ship" in tokens:
+                    ship_id = tokens[tokens.index("--ship") + 1]
+                    # Execute code to view ship details by ID (ship_id)
+                    pass
+                else:
+                    # Invalid or incomplete command
+                    print("Invalid command. Please specify '--all' or '--ship <ship_id>'.")
+            elif len(tokens) > 1 and tokens[1] == "docked":
+                # Execute code to view docked ships
+                pass
+            elif len(tokens) > 1 and tokens[1] == "transit":
+                # Execute code to view ships in transit
+                pass
+            else:
+                # Invalid command
+                print("Invalid command. Please use 'view ships', 'view docked', or 'view transit'.")
+        elif command == "buy":
+            # Handle 'buy' command
+            pass
+        elif command == "sell":
+            # Handle 'sell' command
+            pass
+        elif command == "time":
+            # Handle 'time' command
+            pass
+        elif command == "exit":
+            break  # Exit the loop to end the program
+        else:
+            # Invalid command
+            print("Invalid command. Please try again or type 'exit' to quit.")
+            # sys.exit()
         
 def new_user():
     # register a new user
@@ -76,11 +158,12 @@ def new_user():
 
 
 def start_app():
-    display_title()
+    
     server_status()
     token = authenticate_user()
     print(token)
     print("you are authenticated!")
+    display_title()
     runMenu()
 
 
