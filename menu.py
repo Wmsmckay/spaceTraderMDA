@@ -18,7 +18,19 @@ title = '''
 
 '''
 
-token = ''
+def read_token():
+    try:
+        with open("token.txt", "r") as file:
+            token = file.read().strip()
+            return token
+    except FileNotFoundError:
+        print("Please authenticate by putting token into token.txt file.")
+        exit()
+
+headers = {
+    "Authorization": f"Bearer {read_token()}",
+}
+
 
 class bcolors:
     HEADER = '\033[95m'
@@ -39,19 +51,34 @@ class bcolors:
 # print(f"{bcolors.WARNING}WARNING{bcolors.ENDC}")
 # print(f"{bcolors.UNDERLINE}UNDERLINE{bcolors.ENDC}")
 
+base_url = 'https://api.spacetraders.io/v2/'
 
 def display_title():
     print(title)
 
 def authenticate_user():
-    # get user api key to authenticate
-    print("Please authenticate before using.")
-    token = input("API Token: ")
-    return token
+    try:
+        with open("token.txt", "r") as file:
+            token = file.read().strip()
+    except FileNotFoundError:
+        print("Please authenticate by putting token into token.txt file.")
+        exit()
+
+    headers = {
+        "Authorization": f"Bearer {token}"
+    }
+    url = "https://api.spacetraders.io/v2/my/ships"
+
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        print("Authentication successful. Continuing program...")
+    else:
+        print("Authentication failed. Please check your token.")
+        exit()
 
 def server_status():
-    url = 'https://api.spacetraders.io/v2/'
-    response = requests.get(url,)
+    # url = 'https://api.spacetraders.io/v2/'
+    response = requests.get(base_url)
     if response.status_code == 200:
         response_data = response.json()
         print(f"{bcolors.OKGREEN}{response_data['status']}{bcolors.ENDC}")
@@ -64,6 +91,27 @@ def server_status():
 def get_input():
     response = input(">")
     return response
+
+def view_ships(ship_id=None):
+    url = f"{base_url}my/ships"
+    if ship_id is not None:
+        url += f"/{ship_id}"
+    response = requests.get(url, headers=headers)
+    print(response)
+    print(url)
+    if response.status_code == 200:
+        # Process and display ship details
+        ship_details = response.json()
+        if isinstance(ship_details, list):
+            for ship in ship_details:
+                # Display ship information
+                print(ship)
+        else:
+            # Display ship information
+            print(ship_details)
+    else:
+        print("Error retrieving ship details.")
+
 
 def print_menu():
     menu = '''\n
@@ -111,19 +159,16 @@ def runMenu():
     while True:
         user_input = get_input().lower()  # Read user input
         tokens = user_input.split()  # Split input into tokens
-
         command = tokens[0]  # Identify the command
         if command == "help":
             print_menu()
         elif command == "view":
             if len(tokens) > 1 and tokens[1] == "ships":
                 if "--all" in tokens:
-                    # Execute code to view all ship details
-                    pass
+                    view_ships()
                 elif "--ship" in tokens:
                     ship_id = tokens[tokens.index("--ship") + 1]
-                    # Execute code to view ship details by ID (ship_id)
-                    pass
+                    view_ships(ship_id)
                 else:
                     # Invalid or incomplete command
                     print("Invalid command. Please specify '--all' or '--ship <ship_id>'.")
@@ -156,13 +201,10 @@ def new_user():
     # register a new user
     pass
 
-
 def start_app():
     
     server_status()
     token = authenticate_user()
-    print(token)
-    print("you are authenticated!")
     display_title()
     runMenu()
 

@@ -3,12 +3,19 @@ import matplotlib.pyplot as plt
 
 
 url = 'https://api.spacetraders.io/v2/systems'
-bearer_token = 'YOUR_BEARER_TOKEN'
+
+def read_token():
+    try:
+        with open("token.txt", "r") as file:
+            token = file.read().strip()
+            return token
+    except FileNotFoundError:
+        print("Please authenticate by putting token into token.txt file.")
+        exit()
 
 headers = {
-    "Authorization": f"Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZGVudGlmaWVyIjoiQlVUVF9NVU5DSEVSIiwidmVyc2lvbiI6InYyIiwicmVzZXRfZGF0ZSI6IjIwMjMtMDYtMDMiLCJpYXQiOjE2ODYwNjY0MjEsInN1YiI6ImFnZW50LXRva2VuIn0.j0zC32St4fFN3ZmeQ8x9u6z3tJZzrRpa1Pak1UNKyn3OZ5HX0NeTzkWm_YqZD8P3JO7xU_ML9iwYatiu0xU-EYkaki5L0dIv3jjzOQ0xXQ_KFXA_ZUgw6t2nwEETEqbiFj3AY4FnfFTtCVyDSuwwF1T6Lvw_g0zjXTH5qhJkUSdcS6ivxp0NGksKLsoG6pGm32OqQbCEGDe-tKr4BXmoMOE3Cp_w6XbTCzr821rG7ripRq_cQHwbP23u5Ih60MbTzubXCuN4pp382ZNW-rOAwpaNrTCGo8oVADHH2XfLcDcDU-VIJjXSh8OpN-wDAzCcUblZSFYQ0Mle-3Fq-oAw1A",
+    "Authorization": f"Bearer {read_token()}",
 }
-
 
 def get_data():
     try:
